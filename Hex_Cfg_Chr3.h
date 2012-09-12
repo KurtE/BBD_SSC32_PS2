@@ -20,26 +20,53 @@
 //====================================================================
 #ifndef HEX_CFG_CHR3_H
 #define HEX_CFG_CHR3_H
-//[CONDITIONAL COMPILING] - COMMENT IF NOT WANTED
-// Define other optional compnents to be included or not...
-#define OPT_TERMINAL_MONITOR  
 
-#ifdef OPT_TERMINAL_MONITOR   // turning off terminal monitor will turn these off as well...
-#define OPT_SSC_FORWARDER  // only useful if terminal monitor is enabled
+
+// Which type of control(s) do you want to compile in
+
+#define DBGSerial         Serial
+
+
+
+#ifdef __AVR__
+#if defined(UBRR1H)
+#define SSCSerial         Serial1
+#define XBeeSerial        Serial3 //Serial2
+#endif
+#else
+#define SSCSerial         Serial1
+#endif
+
+//==================================================================================================================================
+// Define which input classes we will use. If we wish to use more than one we need to define USEMULTI - This will define a forwarder
+//    type implementation, that the Inputcontroller will need to call.  There will be some negotion for which one is in contol.
+//
+//  If this is not defined, The included Controller should simply implement the InputController Class...
+//==================================================================================================================================
+//#define USEMULTI
+//#define USEXBEE            // only allow to be defined on Megas...
+#define USEPS2
+//#define USECOMMANDER
+
+// NOW split up the two global configurations...
+//==================================================================================================================================
+//==================================================================================================================================
+//==================================================================================================================================
+// Kurts THR4 with SSC-32 - Can be several different processors configured here.
+//==================================================================================================================================
+#define OPT_TERMINAL_MONITOR  
+#ifdef OPT_TERMINAL_MONITOR
+//#define OPT_SSC_FORWARDER  // only useful if terminal monitor is enabled
 #define OPT_FIND_SERVO_OFFSETS    // Only useful if terminal monitor is enabled
 #endif
 
 #define OPT_GPPLAYER
 
-// Which type of control(s) do you want to compile in
-#define DBGSerial         Serial
+#define USE_SSC32
+#define	cSSC_BINARYMODE	1			// Define if your SSC-32 card supports binary mode.
 
-#if defined(UBRR1H)
-#define SSCSerial         Serial1
-#else
-#endif
-
-#define USEPS2
+// Debug options
+//#define DEBUG_IOPINS    // used to control if we are going to use IO pins for debug support
 
 //==================================================================================================================================
 //==================================================================================================================================

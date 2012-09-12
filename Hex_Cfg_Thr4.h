@@ -20,13 +20,11 @@
 #define HEX_CFG_THR4_H
 
 
-// Which type of control(s) do you want to compile in
+//==================================================================================================================================
+//[SERIAL CONNECTIONS]
+//==================================================================================================================================
 
 #define DBGSerial         Serial
-
-// Define other optional compnents to be included or not...
-
-//#define DEBUG_IOPINS    // used to control if we are going to use IO pins for debug support
 
 
 #ifdef __AVR__
@@ -49,9 +47,6 @@
 #define USEPS2
 //#define USECOMMANDER
 
-// NOW split up the two global configurations...
-//==================================================================================================================================
-//==================================================================================================================================
 //==================================================================================================================================
 // Kurts THR4 with SSC-32 - Can be several different processors configured here.
 //==================================================================================================================================
@@ -67,8 +62,9 @@
 #define	cSSC_BINARYMODE	1			// Define if your SSC-32 card supports binary mode.
 #define c4DOF    
 
-//[SERIAL CONNECTIONS]
+// Define other optional compnents to be included or not...
 
+//#define DEBUG_IOPINS    // used to control if we are going to use IO pins for debug support
 
 #ifdef __AVR__
 #if defined(UBRR1H)            // Mega defines...
