@@ -24,7 +24,6 @@
 
 // Which type of control(s) do you want to compile in
 
-#define DBGSerial         Serial
 
 
 
@@ -32,6 +31,8 @@
 #if defined(UBRR1H)
 #define SSCSerial         Serial1
 #define XBeeSerial        Serial3 //Serial2
+#else
+#define XBeeSerial        Serial
 #endif
 #else
 #define SSCSerial         Serial1
@@ -48,13 +49,19 @@
 #define USEPS2
 //#define USECOMMANDER
 
+#ifndef USECOMMANDER
+#define DBGSerial         Serial
+#endif
 // NOW split up the two global configurations...
 //==================================================================================================================================
 //==================================================================================================================================
 //==================================================================================================================================
 // Kurts THR4 with SSC-32 - Can be several different processors configured here.
 //==================================================================================================================================
-#define OPT_TERMINAL_MONITOR  
+#ifdef DBGSerial
+#define OPT_TERMINAL_MONITOR  // Only allow this to be defined if we have a debug serial port
+#endif
+
 #ifdef OPT_TERMINAL_MONITOR
 //#define OPT_SSC_FORWARDER  // only useful if terminal monitor is enabled
 #define OPT_FIND_SERVO_OFFSETS    // Only useful if terminal monitor is enabled
@@ -91,6 +98,13 @@
 #define PS2_CMD      7
 #define PS2_SEL      8
 #define PS2_CLK      9
+
+#define cXBEE_OUT        4
+#define cXBEE_IN         5
+#define XBEE_BAUD        38400
+
+
+
 // If we are using a SSC-32 then:
 // If were are running on an Arduino Mega we will use one of the hardware serial port, default to Serial1 above.
 // If on Non mega, if the IO pins are set to 0, we will overload the hardware Serial port 
