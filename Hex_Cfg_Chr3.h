@@ -46,8 +46,9 @@
 //==================================================================================================================================
 //#define USEMULTI
 //#define USEXBEE            // only allow to be defined on Megas...
-#define USEPS2
+//#define USEPS2
 //#define USECOMMANDER
+#define USESERIAL
 
 #ifndef USECOMMANDER
 #define DBGSerial         Serial
