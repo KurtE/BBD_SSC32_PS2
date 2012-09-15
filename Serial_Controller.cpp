@@ -103,7 +103,12 @@
 #include "Hex_Globals.h"
 #ifdef USESERIAL
 
+
 //[CONSTANTS]
+#ifndef SERIAL_BAUD
+#define SERIAL_BAUD 38400
+#endif
+
 #define WALKMODE          0
 #define TRANSLATEMODE     1
 #define ROTATEMODE        2
@@ -167,13 +172,14 @@ extern void SerTurnRobotOff(void);
 //the input controller, which in this case is the PS2 controller
 //process any commands.
 //==============================================================================
-
 // If both PS2 and XBee are defined then we will become secondary to the xbee
 void InputController::Init(void)
 {
   int error;
 
   // May need to init the Serial port here...
+  Serial.begin(SERIAL_BAUD);
+  
   g_BodyYOffset = 0;    
   g_BodyYShift = 0;
   g_wSerialErrorCnt = 0;  // error count

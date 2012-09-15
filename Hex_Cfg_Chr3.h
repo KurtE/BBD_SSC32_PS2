@@ -50,7 +50,7 @@
 //#define USECOMMANDER
 #define USESERIAL
 
-#ifndef USECOMMANDER
+#if !defined USECOMMANDER && !defined USESERIAL
 #define DBGSerial         Serial
 #endif
 // NOW split up the two global configurations...
@@ -104,6 +104,7 @@
 #define cXBEE_IN         5
 #define XBEE_BAUD        38400
 
+#define SERIAL_BAUD    38400
 
 
 // If we are using a SSC-32 then:
