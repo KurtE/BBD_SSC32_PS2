@@ -200,6 +200,7 @@ void InputController::Init(void)
 void InputController::AllowControllerInterrupts(boolean fAllow)
 {
   // We don't need to do anything...
+  
 }
 
 #define ButtonPressed(wMask) (((wButtons & wMask) == 0) && ((g_wButtonsPrev & wMask) != 0))
@@ -238,7 +239,7 @@ void InputController::ControlInput(void)
   // Lets check the checksum...
   if (abDualShock[0] == (abDualShock[1] ^ abDualShock[2] ^ abDualShock[3] ^ abDualShock[4] ^ abDualShock[5] ^ abDualShock[6])) {
 
-    wButtons = (abDualShock[1] << 8) || abDualShock[2];
+    wButtons = (abDualShock[1] << 8) | abDualShock[2];
 
     // In an analog mode so should be OK...
     g_wSerialErrorCnt = 0;    // clear out error count...
