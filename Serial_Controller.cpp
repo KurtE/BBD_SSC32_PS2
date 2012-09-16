@@ -105,6 +105,11 @@
 
 
 //[CONSTANTS]
+// Default to Serial but allow to be defined to something else
+#ifndef SerSerial
+#define SerSerial Serial
+#endif
+
 #ifndef SERIAL_BAUD
 #define SERIAL_BAUD 38400
 #endif
@@ -178,7 +183,7 @@ void InputController::Init(void)
   int error;
 
   // May need to init the Serial port here...
-  Serial.begin(SERIAL_BAUD);
+  SerSerial.begin(SERIAL_BAUD);
   
   g_BodyYOffset = 0;    
   g_BodyYShift = 0;
@@ -216,12 +221,12 @@ void InputController::ControlInput(void)
   boolean fAdjustLegPositions = false;
   word wButtons;
 
-  Serial.print("Rd");
+  SerSerial.print("Rd");
 
   // we will loop through reading our 7 bytes
   ulLastChar = millis();
   for (byte i=0; i < 7; i++) {
-    while  (Serial.available() == 0) {
+    while  (SerSerial.available() == 0) {
       if ((millis() - ulLastChar) > 200) {
         // We may have lost the serial communications 
         if (g_wSerialErrorCnt < MAXPS2ERRORCNT)
@@ -232,7 +237,7 @@ void InputController::ControlInput(void)
       }      
     }
 
-    abDualShock[i] = Serial.read();
+    abDualShock[i] = SerSerial.read();
     ulLastChar = millis();
   }  
 
