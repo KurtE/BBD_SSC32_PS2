@@ -5,7 +5,7 @@
 //Date: 29-10-2009
 //Programmer: Jeroen Janssen [aka Xan]
 //         Kurt Eckhardt(KurtE) converted to C and Arduino
-//   K�re Halvorsen aka Zenta - Makes everything work correctly!     
+//   Kåre Halvorsen aka Zenta - Makes everything work correctly!     
 //
 // This version of the Phoenix code was ported over to the Arduino Environement
 // and is specifically configured for the Lynxmotion BotBoarduino 
@@ -1745,6 +1745,7 @@ void DumpEEPROMCmd(byte *pszCmdLine) {
     }
     }
 #endif
+
 
 
 

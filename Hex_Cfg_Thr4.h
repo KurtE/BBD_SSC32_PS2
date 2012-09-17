@@ -355,3 +355,4 @@
 #define cTarsFactorB	60	//4DOF ONLY
 #define cTarsFactorC	50	//4DOF ONLY
 #endif // HEX_CFG_THR4_H
+
