@@ -545,7 +545,7 @@ Commander::Commander(){
 // Commander::begin 
 //==============================================================================
 void Commander::begin(unsigned long baud){
-  Serial.begin(baud);
+  XBeeSerial.begin(baud);
 }
 
 //==============================================================================
@@ -555,23 +555,23 @@ void Commander::begin(unsigned long baud){
 /* process messages coming from Commander 
  *  format = 0xFF RIGHT_H RIGHT_V LEFT_H LEFT_V BUTTONS EXT CHECKSUM */
 int Commander::ReadMsgs(){
-  while(Serial.available() > 0){
+  while(XBeeSerial.available() > 0){
     //		digitalWrite(0, !digitalRead(0));
     if(index == -1){         // looking for new packet
-      if(Serial.read() == 0xff){
+      if(XBeeSerial.read() == 0xff){
         index = 0;
         checksum = 0;
       }
     }
     else if(index == 0){
-      vals[index] = (unsigned char) Serial.read();
+      vals[index] = (unsigned char) XBeeSerial.read();
       if(vals[index] != 0xff){            
         checksum += (int) vals[index];
         index++;
       }
     }
     else{
-      vals[index] = (unsigned char) Serial.read();
+      vals[index] = (unsigned char) XBeeSerial.read();
       checksum += (int) vals[index];
       index++;
       if(index == 7){ // packet complete
@@ -590,9 +590,9 @@ int Commander::ReadMsgs(){
           ext = vals[5];
         }
         index = -1;
-        while (Serial.read() != -1)
+        while (XBeeSerial.read() != -1)
           ;
-        //Serial.flush();  ' Not the same on Arduino 1.0+
+        //XBeeSerial.flush();  ' Not the same on Arduino 1.0+
         return 1;
       }
     }

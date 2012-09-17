@@ -33,9 +33,11 @@
 #define XBeeSerial        Serial3 //Serial2
 #else
 #define XBeeSerial        Serial
+#define DontAllowDebug
 #endif
-#else
+#else  // For My Pic32 Mega shield...
 #define SSCSerial         Serial1
+#define XBeeSerial        Serial3
 #endif
 
 //==================================================================================================================================
@@ -47,11 +49,21 @@
 //#define USEMULTI
 //#define USEXBEE            // only allow to be defined on Megas...
 //#define USEPS2
-//#define USECOMMANDER
-#define USESERIAL
+#define USECOMMANDER
+//#define USESERIAL
 
-#if !defined USECOMMANDER && !defined USESERIAL
-#define DBGSerial         Serial
+// Do we want Debug Serial Output?
+#define DBGSerial Serial
+
+// Some configurations will not allow this so if one of them undefine it
+#if (defined USEXBEE) || (defined USECOMMANDER)
+#ifdef DontAllowDebug
+#undef DBGSerial
+#endif
+#endif
+
+#ifdef USESERIAL
+#undef DBGSerial
 #endif
 // NOW split up the two global configurations...
 //==================================================================================================================================
@@ -94,6 +106,8 @@
 
 //--------------------------------------------------------------------
 //[Botboarduino Pin Numbers]
+#ifdef __AVR__
+#if !defined(UBRR1H)
 #define SOUND_PIN    5        // Botboarduino JR pin number
 #define PS2_DAT      6        
 #define PS2_CMD      7
@@ -113,7 +127,34 @@
 // Else we will user SoftwareSerial to talk to the SSC-32
 #define cSSC_OUT     12      	//Output pin for (SSC32 RX) on BotBoard (Yellow)
 #define cSSC_IN      13      	//Input pin for (SSC32 TX) on BotBoard (Blue)
+#else
+//[Kurt's Mega Shield]
+#define SOUND_PIN    44        // 
+#define PS2_DAT      46        
+#define PS2_CMD      47
+#define PS2_SEL      48
+#define PS2_CLK      49
 
+// XBee was defined to use a hardware Serial port
+#define XBEE_BAUD        38400
+#define SERIAL_BAUD    38400
+
+// SSC32 is using Hardware Serial Port
+#endif
+#else
+//[Kurt's Mega shield on Chipkit Max32]
+#define SOUND_PIN    44        // 
+#define PS2_DAT      46        
+#define PS2_CMD      47
+#define PS2_SEL      48
+#define PS2_CLK      49
+
+// XBee was defined to use a hardware Serial port
+#define XBEE_BAUD        38400
+#define SERIAL_BAUD    38400
+
+// SSC32 is using Hardware Serial Port
+#endif
 //====================================================================
 //[SSC PIN NUMBERS]
 #define cRRCoxaPin      0   //Rear Right leg Hip Horizontal
